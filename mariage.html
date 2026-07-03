@@ -7,6 +7,7 @@
 <meta name="description" content="Photographie de mariage par Askamore Photography : préparatifs, cérémonie, réception. Un style moderne et élégant.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root{
     --ink:#1c1a17;
@@ -208,6 +209,10 @@
   .g-item{
     position:relative; overflow:hidden; cursor:pointer; display:block;
     background:linear-gradient(150deg,#efe6d6,#cdb78e);
+    background-size:cover; background-position:center;
+  }
+  .g-item img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;
   }
   .g-item span{
     position:absolute; left:18px; bottom:16px; z-index:2;
@@ -364,7 +369,17 @@
   }
   .p-item span{
     font-family:var(--serif); font-style:italic; color:rgba(28,26,23,0.55); font-size:14px;
+    position:relative; z-index:2;
   }
+  .p-item img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;
+  }
+  .p-item.has-photo::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 45%, rgba(20,18,15,0.6) 100%);
+    z-index:1;
+  }
+  .p-item.has-photo span{ color:#fff; }
   .p-tall{grid-row:span 2;}
   .p-wide{grid-column:span 2;}
   @media (max-width:520px){ .p-wide{grid-column:span 1;} }
@@ -514,6 +529,40 @@
   }, {threshold:0.15});
   revealEls.forEach(el => io.observe(el));
 
+  // ---------- CHARGEMENT DES PHOTOS DEPUIS SUPABASE ----------
+  const SUPABASE_URL = 'https://okruoclbvsazfbyrygch.supabase.co'; // ⚠️ À REMPLACER
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rcnVvY2xidnNhemZieXJ5Z2NoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMjc4MzUsImV4cCI6MjA5ODYwMzgzNX0.R7fHQMFR9XHFSRK1cudW2DLBGfDbqQdnMKfwPB4HCgY'; // ⚠️ À REMPLACER
+  (async function loadCategoryPhotos(){
+    try{
+      if(typeof supabase === 'undefined') return;
+      const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      const { data, error } = await sb.from('gallery_photos')
+        .select('*')
+        .eq('category', 'mariage')
+        .order('sort_order', {ascending:true})
+        .order('created_at', {ascending:true});
+      if(error || !data || data.length === 0) return;
+      const grid = document.querySelector('.photo-masonry');
+      if(!grid) return;
+      grid.innerHTML = '';
+      const sizePattern = ['p-tall','p-wide','','','p-tall','p-wide','',''];
+      data.forEach((row, i) => {
+        const url = sb.storage.from('gallery').getPublicUrl(row.file_path).data.publicUrl;
+        const div = document.createElement('div');
+        const sizeClass = sizePattern[i % sizePattern.length];
+        div.className = 'p-item has-photo' + (sizeClass ? ' ' + sizeClass : '');
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = row.caption || 'mariage';
+        img.loading = 'lazy';
+        const span = document.createElement('span');
+        span.textContent = row.caption || '';
+        div.appendChild(img);
+        div.appendChild(span);
+        grid.appendChild(div);
+      });
+    }catch(e){ /* en cas d'erreur, les blocs par défaut restent affichés */ }
+  })();
 </script>
 </body>
 </html>

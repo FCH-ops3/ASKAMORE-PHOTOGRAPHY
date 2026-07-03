@@ -29,9 +29,23 @@ Chaque page est **autonome** (le design et les scripts sont intégrés directeme
 9. Après 1 à 2 minutes, votre site sera en ligne à une adresse du type :
    `https://votre-nom-utilisateur.github.io/askamore-photography/`
 
+## 🔐 Espace privé & ajout de photos
+
+Le site dispose maintenant d'une page de connexion (`admin.html`) réservée à Flavie et Gokan, permettant :
+- D'ajouter des photos directement à la galerie publique (elles apparaissent automatiquement sur le site)
+- De stocker tout le travail personnel dans un espace 100% privé, jamais visible par les visiteurs
+
+**Configuration nécessaire (une seule fois)** : voir [`SUPABASE_SETUP.md`](./SUPABASE_SETUP.md), guide pas à pas (15 minutes, gratuit).
+
+## 🗂️ Stocker tout votre travail (photos non publiées)
+
+Avec l'espace privé (`admin.html`), vous pouvez maintenant stocker tout votre travail directement lié au site, avec identifiant/mot de passe, organisé par dossier/client. C'est privé, sécurisé, et accessible uniquement par vous deux.
+
 ## ✅ À faire avant la mise en ligne définitive
 
-- [ ] Remplacer les blocs beige (galerie, page "À propos") par vos vraies photos
+- [ ] Configurer Supabase en suivant `SUPABASE_SETUP.md`
+- [ ] Créer votre identifiant de connexion et tester `admin.html`
+- [ ] Ajouter vos premières vraies photos via l'espace privé
 - [ ] Créer un compte [Formspree](https://formspree.io) et brancher l'URL du formulaire dans `index.html` pour que le formulaire de contact envoie automatiquement les e-mails (voir commentaire `⚠️ À REMPLACER` dans le code)
 - [ ] Vérifier les coordonnées de contact (téléphone, e-mail, Instagram, TikTok)
 - [ ] Envisager un nom de domaine personnalisé (ex: askamorephotography.fr) branché sur GitHub Pages si vous le souhaitez

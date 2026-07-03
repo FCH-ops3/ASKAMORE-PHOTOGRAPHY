@@ -7,6 +7,7 @@
 <meta name="description" content="Askamore Photography : photographie de mariage, fiançailles et événements. Séances photo sur-mesure. Un style moderne, élégant et professionnel.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root{
     --ink:#1c1a17;
@@ -208,6 +209,10 @@
   .g-item{
     position:relative; overflow:hidden; cursor:pointer; display:block;
     background:linear-gradient(150deg,#efe6d6,#cdb78e);
+    background-size:cover; background-position:center;
+  }
+  .g-item img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;
   }
   .g-item span{
     position:absolute; left:18px; bottom:16px; z-index:2;
@@ -364,7 +369,17 @@
   }
   .p-item span{
     font-family:var(--serif); font-style:italic; color:rgba(28,26,23,0.55); font-size:14px;
+    position:relative; z-index:2;
   }
+  .p-item img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;
+  }
+  .p-item.has-photo::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 45%, rgba(20,18,15,0.6) 100%);
+    z-index:1;
+  }
+  .p-item.has-photo span{ color:#fff; }
   .p-tall{grid-row:span 2;}
   .p-wide{grid-column:span 2;}
   @media (max-width:520px){ .p-wide{grid-column:span 1;} }
@@ -489,11 +504,11 @@
       <h2>Un aperçu <em>de notre travail</em></h2>
     </div>
     <div class="gallery-grid reveal">
-      <a href="mariage.html" class="g-item g1"><span>Mariage</span></a>
-      <a href="fiancailles.html" class="g-item g2"><span>Fiançailles</span></a>
-      <a href="gender-reveal.html" class="g-item g3"><span>Gender Reveal</span></a>
-      <a href="seance-photo.html" class="g-item g4"><span>Séance Photo</span></a>
-      <a href="mariage.html" class="g-item g5"><span>Cérémonie</span></a>
+      <a href="mariage.html" class="g-item g1" data-category="mariage" data-photo-index="0"><span>Mariage</span></a>
+      <a href="fiancailles.html" class="g-item g2" data-category="fiancailles" data-photo-index="0"><span>Fiançailles</span></a>
+      <a href="gender-reveal.html" class="g-item g3" data-category="gender-reveal" data-photo-index="0"><span>Gender Reveal</span></a>
+      <a href="seance-photo.html" class="g-item g4" data-category="seance-photo" data-photo-index="0"><span>Séance Photo</span></a>
+      <a href="mariage.html" class="g-item g5" data-category="mariage" data-photo-index="1"><span>Cérémonie</span></a>
     </div>
     <p class="gallery-note">Cliquez sur une catégorie pour découvrir plus de photos — espace prêt à accueillir vos visuels.</p>
   </div>
@@ -886,6 +901,37 @@
       cfSubmitBtn.textContent = 'Envoyer la demande';
     }
   });
+  // ---------- VIGNETTES GALERIE (accueil) depuis Supabase ----------
+  const SUPABASE_URL = 'https://okruoclbvsazfbyrygch.supabase.co'; // ⚠️ À REMPLACER
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rcnVvY2xidnNhemZieXJ5Z2NoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMjc4MzUsImV4cCI6MjA5ODYwMzgzNX0.R7fHQMFR9XHFSRK1cudW2DLBGfDbqQdnMKfwPB4HCgY'; // ⚠️ À REMPLACER
+  (async function loadGalleryThumbnails(){
+    try{
+      if(typeof supabase === 'undefined') return;
+      const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      const items = document.querySelectorAll('.g-item[data-category]');
+      const cache = {};
+      for(const el of items){
+        const category = el.dataset.category;
+        const index = parseInt(el.dataset.photoIndex || '0');
+        if(!(category in cache)){
+          const { data } = await sb.from('gallery_photos')
+            .select('*')
+            .eq('category', category)
+            .order('sort_order', {ascending:true})
+            .order('created_at', {ascending:true});
+          cache[category] = data || [];
+        }
+        const list = cache[category];
+        const row = list[index] || list[0];
+        if(row){
+          const url = sb.storage.from('gallery').getPublicUrl(row.file_path).data.publicUrl;
+          el.style.backgroundImage = `url('${url}')`;
+          const span = el.querySelector('span');
+          if(span && row.caption) span.textContent = row.caption;
+        }
+      }
+    }catch(e){ /* garde le placeholder si erreur */ }
+  })();
 </script>
 
 
