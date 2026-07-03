@@ -209,10 +209,10 @@
   .g-item{
     position:relative; overflow:hidden; cursor:pointer; display:block;
     background:linear-gradient(150deg,#efe6d6,#cdb78e);
-    background-size:cover; background-position:center;
+    background-size:contain; background-repeat:no-repeat; background-position:center;
   }
   .g-item img{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;
+    position:absolute; inset:0; width:100%; height:100%; object-fit:contain; z-index:0;
   }
   .g-item span{
     position:absolute; left:18px; bottom:16px; z-index:2;
@@ -225,13 +225,12 @@
   }
   .g-item:hover::before{background:rgba(28,26,23,0.38);}
   .g-item:hover span{opacity:1; transform:translateY(0);}
-  .g1{grid-column:span 2; grid-row:span 2; background:linear-gradient(150deg,#f1e7d5,#cdae76);}
-  .g2{grid-column:span 2; grid-row:span 2; background:linear-gradient(150deg,#e9ddc6,#b79a6c);}
-  .g3{grid-column:span 2; grid-row:span 2; background:linear-gradient(150deg,#efe4d1,#a98c60);}
+  .g1{grid-column:span 3; grid-row:span 2; background:linear-gradient(150deg,#f1e7d5,#cdae76);}
+  .g2{grid-column:span 3; grid-row:span 2; background:linear-gradient(150deg,#e9ddc6,#b79a6c);}
+  .g3{grid-column:span 3; grid-row:span 2; background:linear-gradient(150deg,#efe4d1,#a98c60);}
   .g4{grid-column:span 3; grid-row:span 2; background:linear-gradient(150deg,#e3d5b8,#8f7757);}
-  .g5{grid-column:span 3; grid-row:span 2; background:linear-gradient(150deg,#f4ecdf,#d9c6a5);}
   @media (max-width:768px){
-    .g1,.g2,.g3,.g4,.g5{grid-column:span 1; grid-row:span 2;}
+    .g1,.g2,.g3,.g4{grid-column:span 1; grid-row:span 2;}
   }
   .gallery-note{margin-top:26px; font-size:13px; color:#8a8072; text-align:center;}
 
@@ -447,11 +446,10 @@
   <div class="wrap about">
     <div class="about-visual reveal"><div class="about-visual-frame"></div></div>
     <div class="about-text reveal">
-      <span class="eyebrow">À propos</span>
+      <span class="eyebrow">À propos de nous</span>
       <p class="lede">« Nous ne nous contentons pas de prendre des photos, nous capturons ce que vous ressentez. »</p>
-      <p>Derrière Askamore Photography, il y a une passion simple : raconter vos histoires à travers l'image. Mariages, fiançailles ou séance photo, chaque prestation est pensée pour vous ressembler — naturelle, élégante et sincère.</p>
-      <p>Notre approche mêle discrétion et direction artistique : nous captons les émotions spontanées tout en soignant la lumière, le cadrage et chaque détail, pour des images intemporelles que vous garderez toute une vie.</p>
-      <p class="signature">— Flavie et Gokan</p>
+      <p>Nous sommes un couple de photographes, unis dans la vie comme dans notre vision artistique. Ensemble, nous immortalisons les instants les plus précieux avec une approche éditoriale, raffinée et profondément émotionnelle, afin de créer des souvenirs qui traversent le temps.</p>
+      <p class="signature">— Flavie et Gökan</p>
     </div>
   </div>
 </section>
@@ -506,9 +504,8 @@
     <div class="gallery-grid reveal">
       <a href="mariage.html" class="g-item g1" data-category="mariage" data-photo-index="0"><span>Mariage</span></a>
       <a href="fiancailles.html" class="g-item g2" data-category="fiancailles" data-photo-index="0"><span>Fiançailles</span></a>
-      <a href="gender-reveal.html" class="g-item g3" data-category="gender-reveal" data-photo-index="0"><span>Gender Reveal</span></a>
+      <a href="gender-reveal.html" class="g-item g3" data-category="gender-reveal" data-photo-index="0"><span>Autre événement</span></a>
       <a href="seance-photo.html" class="g-item g4" data-category="seance-photo" data-photo-index="0"><span>Séance Photo</span></a>
-      <a href="mariage.html" class="g-item g5" data-category="mariage" data-photo-index="1"><span>Cérémonie</span></a>
     </div>
     <p class="gallery-note">Cliquez sur une catégorie pour découvrir plus de photos — espace prêt à accueillir vos visuels.</p>
   </div>
@@ -517,8 +514,8 @@
 <section id="why" style="background:var(--white);">
   <div class="wrap">
     <div class="section-head reveal">
-      <span class="eyebrow">Pourquoi nous choisir</span>
-      <h2>Une expérience <em>pensée pour vous</em> ?</h2>
+      <span class="eyebrow">Pourquoi nous choisir ?</span>
+      <h2>Une expérience <em>pensée pour vous</em></h2>
     </div>
     <div class="why reveal">
       <div class="why-item">
