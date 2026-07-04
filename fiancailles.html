@@ -357,32 +357,35 @@
   .page-hero p{max-width:560px; margin-top:20px; font-size:15.5px; color:#4a453e;}
 
   .photo-masonry{
-    display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:200px; gap:14px;
+    column-count:4; column-gap:14px;
     padding:70px 0;
   }
-  @media (max-width:900px){ .photo-masonry{grid-template-columns:repeat(2,1fr);} }
-  @media (max-width:520px){ .photo-masonry{grid-template-columns:1fr; grid-auto-rows:220px;} }
+  @media (max-width:900px){ .photo-masonry{column-count:2;} }
+  @media (max-width:520px){ .photo-masonry{column-count:1;} }
   .p-item{
-    position:relative; overflow:hidden;
+    position:relative; overflow:hidden; break-inside:avoid; margin-bottom:14px;
     background:linear-gradient(150deg,#efe6d6,#cdb78e);
     display:flex; align-items:flex-end; padding:16px;
+    min-height:180px;
   }
   .p-item span{
     font-family:var(--serif); font-style:italic; color:rgba(28,26,23,0.55); font-size:14px;
     position:relative; z-index:2;
   }
   .p-item img{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:contain; z-index:0;
+    display:block; width:100%; height:auto;
+  }
+  .p-item.has-photo{
+    display:block; padding:0; min-height:0;
   }
   .p-item.has-photo::before{
     content:''; position:absolute; inset:0;
     background:linear-gradient(180deg, transparent 45%, rgba(20,18,15,0.6) 100%);
     z-index:1;
   }
-  .p-item.has-photo span{ color:#fff; }
-  .p-tall{grid-row:span 2;}
-  .p-wide{grid-column:span 2;}
-  @media (max-width:520px){ .p-wide{grid-column:span 1;} }
+  .p-item.has-photo span{
+    color:#fff; position:absolute; left:16px; bottom:16px; z-index:2;
+  }
 
   .page-cta{
     background:var(--ink); color:var(--paper); text-align:center; padding:90px 0;
@@ -441,13 +444,13 @@
 
 <div class="wrap">
   <div class="photo-masonry">
-    <div class="p-item p-wide"><span>Balade</span></div>
-    <div class="p-item p-tall"><span>Regards</span></div>
+    <div class="p-item"><span>Balade</span></div>
+    <div class="p-item"><span>Regards</span></div>
     <div class="p-item"><span>Rires</span></div>
     <div class="p-item"><span>Duo</span></div>
-    <div class="p-item p-tall"><span>Portrait</span></div>
+    <div class="p-item"><span>Portrait</span></div>
     <div class="p-item"><span>Détails de la bague</span></div>
-    <div class="p-item p-wide"><span>Coucher de soleil</span></div>
+    <div class="p-item"><span>Coucher de soleil</span></div>
     <div class="p-item"><span>Nature</span></div>
   </div>
   <p class="gallery-note">Espace prêt à accueillir vos plus belles photos de fiançailles.</p>
@@ -545,12 +548,10 @@
       const grid = document.querySelector('.photo-masonry');
       if(!grid) return;
       grid.innerHTML = '';
-      const sizePattern = ['p-tall','p-wide','','','p-tall','p-wide','',''];
-      data.forEach((row, i) => {
+      data.forEach((row) => {
         const url = sb.storage.from('gallery').getPublicUrl(row.file_path).data.publicUrl;
         const div = document.createElement('div');
-        const sizeClass = sizePattern[i % sizePattern.length];
-        div.className = 'p-item has-photo' + (sizeClass ? ' ' + sizeClass : '');
+        div.className = 'p-item has-photo';
         const img = document.createElement('img');
         img.src = url;
         img.alt = row.caption || 'fiancailles';
