@@ -1,61 +1,55 @@
-# Askamore Photography — Site vitrine
+# Askamore Photography — Site vitrine V2
 
-Site vitrine pour **Askamore Photography**, photographie événementielle (mariage, fiançailles, gender reveal, autres événements) et séances photo.
+Refonte visuelle complète du site vitrine **Askamore Photography** (photographie de mariage, fiançailles, autres événements et séances photo, par Flavie &amp; Gökan).
+
+## ✨ Ce qui change par rapport à la V1
+
+- Direction artistique entièrement repensée : curseur personnalisé, grain photographique subtil, typographie surdimensionnée, révélations animées au scroll
+- Galerie repensée façon "galerie d'art" : chaque photo est présentée dans un passe-partout blanc avec ombre portée, sans jamais être recadrée
+- Visionneuse plein écran au clic sur une photo (flèches de navigation, fermeture au clavier)
+- Page d'accueil restructurée en manifeste éditorial (grande citation, signature, chiffres clés)
+- **Avis clients désormais partagés entre tous les visiteurs** (stockés dans Supabase, et non plus seulement dans le navigateur de la personne qui les poste)
+- Modération des avis directement depuis l'espace admin
+- Formulaire de contact toujours branché sur Formspree (envoi automatique par e-mail)
 
 ## 📁 Structure du site
 
 ```
-askamore-site/
+askamore-site-v2/
 ├── index.html          → Page d'accueil
 ├── mariage.html         → Galerie Mariage
 ├── fiancailles.html     → Galerie Fiançailles
-├── gender-reveal.html   → Galerie Gender Reveal & Autres événements
+├── gender-reveal.html   → Galerie Autre événement
 ├── seance-photo.html    → Galerie Séance Photo
+├── admin.html           → Espace privé (connexion, ajout photos, modération avis)
+├── setup.sql            → Script de configuration Supabase
+├── SUPABASE_SETUP.md    → Guide pas à pas
 └── README.md
 ```
 
-Chaque page est **autonome** (le design et les scripts sont intégrés directement dans le fichier), il n'y a donc aucune installation ni dépendance à gérer. Le site est en HTML/CSS/JS pur.
+Chaque page est autonome (CSS et JS intégrés), aucune dépendance à gérer en dehors de Supabase et Formspree.
 
-## 🚀 Mettre le site en ligne avec GitHub Pages (gratuit)
+## 🔌 Réutiliser votre projet Supabase existant
 
-1. Créez un compte sur [github.com](https://github.com) si vous n'en avez pas
-2. Cliquez sur **New repository** (bouton vert "New")
-3. Donnez-lui un nom, par exemple `askamore-photography`, laissez-le en **Public**, puis cliquez sur **Create repository**
-4. Sur la page du dépôt, cliquez sur **Add file → Upload files**
-5. Glissez-déposez tous les fichiers de ce dossier (`index.html`, `mariage.html`, `fiancailles.html`, `gender-reveal.html`, `seance-photo.html`, `README.md`)
-6. Cliquez sur **Commit changes**
-7. Allez ensuite dans **Settings → Pages** (menu de gauche)
-8. Dans **Branch**, choisissez `main` et le dossier `/ (root)`, puis **Save**
-9. Après 1 à 2 minutes, votre site sera en ligne à une adresse du type :
-   `https://votre-nom-utilisateur.github.io/askamore-photography/`
+Cette V2 utilise **le même projet Supabase** que la V1 (mêmes clés déjà branchées dans le code). Vos photos et vos identifiants de connexion existants fonctionnent donc immédiatement.
 
-## 🔐 Espace privé & ajout de photos
+**Une seule chose à faire** : ouvrez `setup.sql` dans Supabase (SQL Editor → New query), collez-le entièrement, et cliquez sur **Run**. Ce script est conçu pour être rejoué sans risque même si vous l'aviez déjà exécuté — il ajoute uniquement la nouvelle table des avis clients partagés, sans toucher à vos photos existantes.
 
-Le site dispose maintenant d'une page de connexion (`admin.html`) réservée à Flavie et Gokan, permettant :
-- D'ajouter des photos directement à la galerie publique (elles apparaissent automatiquement sur le site)
-- De stocker tout le travail personnel dans un espace 100% privé, jamais visible par les visiteurs
+## 🚀 Mettre le site en ligne avec GitHub Pages
 
-**Configuration nécessaire (une seule fois)** : voir [`SUPABASE_SETUP.md`](./SUPABASE_SETUP.md), guide pas à pas (15 minutes, gratuit).
-
-## 🗂️ Stocker tout votre travail (photos non publiées)
-
-Avec l'espace privé (`admin.html`), vous pouvez maintenant stocker tout votre travail directement lié au site, avec identifiant/mot de passe, organisé par dossier/client. C'est privé, sécurisé, et accessible uniquement par vous deux.
+1. Créez un nouveau dépôt GitHub (ou réutilisez l'existant si vous remplacez la V1)
+2. Uploadez tous les fichiers de ce dossier via **Add file → Upload files**
+3. Allez dans **Settings → Pages**, sélectionnez la branche `main` et le dossier `/ (root)`, puis **Save**
+4. Votre site sera en ligne à une adresse du type `https://votre-nom.github.io/votre-depot/`
 
 ## ✅ À faire avant la mise en ligne définitive
 
-- [ ] Configurer Supabase en suivant `SUPABASE_SETUP.md`
-- [ ] Créer votre identifiant de connexion et tester `admin.html`
-- [ ] Ajouter vos premières vraies photos via l'espace privé
-- [ ] Créer un compte [Formspree](https://formspree.io) et brancher l'URL du formulaire dans `index.html` pour que le formulaire de contact envoie automatiquement les e-mails (voir commentaire `⚠️ À REMPLACER` dans le code)
-- [ ] Vérifier les coordonnées de contact (téléphone, e-mail, Instagram, TikTok)
-- [ ] Envisager un nom de domaine personnalisé (ex: askamorephotography.fr) branché sur GitHub Pages si vous le souhaitez
-
-## ✏️ Modifier le contenu
-
-Chaque fichier `.html` peut être ouvert et modifié avec n'importe quel éditeur de texte (Bloc-notes, VS Code...). Le texte visible sur le site se trouve directement dans le fichier, entre les balises HTML.
+- [ ] Exécuter `setup.sql` dans Supabase (ajout de la table des avis)
+- [ ] Ajouter vos vraies photos via `admin.html`
+- [ ] Vérifier que le formulaire de contact envoie bien les e-mails (voir SUPABASE_SETUP.md)
 
 ## 🎨 Identité visuelle
 
-- Couleurs : blanc, noir, beige
-- Polices : Cormorant Garamond (titres) et Jost (texte courant)
-- Style : moderne, élégant, professionnel
+- Couleurs : blanc, noir profond, beige, touche d'or discret
+- Polices : Cormorant Garamond (titres, en italique) et Jost (texte courant, labels)
+- Style : luxe, éditorial, sobre — inspiré des studios de photographie haut de gamme

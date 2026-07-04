@@ -10,20 +10,19 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root{
-    --ink:#1c1a17; --paper:#faf7f2; --white:#ffffff;
-    --beige:#d9c6a5; --beige-dark:#a98c60; --beige-line: rgba(28,26,23,0.12);
+    --ink:#141210; --paper:#faf6ee; --white:#ffffff;
+    --gold:#b6905c; --gold-light:#d9c6a5; --line: rgba(20,18,16,0.12);
     --serif:'Cormorant Garamond', serif; --sans:'Jost', sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--paper); color:var(--ink); font-family:var(--sans); font-weight:300; line-height:1.6;}
   a{color:inherit;}
-  .wrap{max-width:1000px; margin:0 auto; padding:0 32px;}
-  header{display:flex; align-items:center; justify-content:space-between; padding:26px 32px; border-bottom:1px solid var(--beige-line);}
-  .logo{font-family:var(--serif); font-style:italic; font-size:20px;}
-  .logo b{font-style:normal; font-weight:500;}
+  .wrap{max-width:1040px; margin:0 auto; padding:0 32px;}
+  header{display:flex; align-items:center; justify-content:space-between; padding:26px 32px; border-bottom:1px solid var(--line);}
+  .logo{font-family:var(--serif); font-style:italic; font-size:21px;}
   .btn{
-    display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
-    font-weight:500; padding:12px 24px; border:1px solid var(--ink); background:var(--ink); color:#fff; cursor:pointer;
+    display:inline-flex; align-items:center; gap:8px; font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    font-weight:500; padding:13px 26px; border:1px solid var(--ink); background:var(--ink); color:#fff; cursor:pointer;
     transition:.3s ease;
   }
   .btn:hover{background:transparent; color:var(--ink);}
@@ -31,77 +30,65 @@
   .btn-ghost:hover{background:var(--ink); color:#fff;}
   .btn:disabled{opacity:0.5; cursor:not-allowed;}
 
-  /* Login */
   #loginScreen{min-height:80vh; display:flex; align-items:center; justify-content:center; padding:40px 20px;}
-  .login-box{max-width:380px; width:100%; background:var(--white); border:1px solid var(--beige-line); padding:44px;}
+  .login-box{max-width:380px; width:100%; background:var(--white); border:1px solid var(--line); padding:48px;}
   .login-box h1{font-family:var(--serif); font-weight:500; font-size:28px; margin-bottom:8px;}
-  .login-box p.sub{font-size:13px; color:#8a8072; margin-bottom:28px;}
-  .field{display:flex; flex-direction:column; gap:8px; margin-bottom:20px;}
-  .field label{font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#8a8072;}
-  .field input{
-    border:1px solid var(--beige-line); padding:12px 14px; font-family:var(--sans); font-size:15px;
-    background:var(--paper); outline:none;
-  }
-  .field input:focus{border-color:var(--ink);}
-  .msg{font-size:13px; margin-top:14px;}
+  .login-box p.sub{font-size:13px; color:#8a8072; margin-bottom:30px;}
+  .field{display:flex; flex-direction:column; gap:8px; margin-bottom:22px;}
+  .field label{font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:#8a8072;}
+  .field input{border:1px solid var(--line); padding:13px 14px; font-family:var(--sans); font-size:15px; background:var(--paper); outline:none;}
+  .field input:focus{border-color:var(--gold);}
+  .msg{font-size:13px; margin-top:16px;}
   .msg.err{color:#a9522f;}
   .msg.ok{color:#6a7a52;}
 
-  /* Dashboard */
   #dashboard{display:none;}
-  section.panel{padding:56px 0; border-bottom:1px solid var(--beige-line);}
-  .panel h2{font-family:var(--serif); font-weight:500; font-size:26px; margin-bottom:6px;}
-  .panel p.sub{font-size:13.5px; color:#8a8072; margin-bottom:30px;}
-  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px;}
+  section.panel{padding:60px 0; border-bottom:1px solid var(--line);}
+  .panel h2{font-family:var(--serif); font-weight:500; font-size:27px; margin-bottom:6px;}
+  .panel p.sub{font-size:13.5px; color:#8a8072; margin-bottom:32px;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;}
   @media (max-width:600px){ .form-row{grid-template-columns:1fr;} }
-  .upload-box{background:var(--white); border:1px solid var(--beige-line); padding:32px;}
+  .upload-box{background:var(--white); border:1px solid var(--line); padding:34px;}
 
-  .thumb-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:14px; margin-top:30px;}
-  .thumb{position:relative; aspect-ratio:1; overflow:hidden; background:var(--beige-line);}
+  .thumb-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:16px; margin-top:32px;}
+  .thumb{position:relative; aspect-ratio:1; overflow:hidden; background:var(--line);}
   .thumb img{width:100%; height:100%; object-fit:cover; display:block;}
-  .thumb .tag{
-    position:absolute; top:6px; left:6px; background:rgba(28,26,23,0.75); color:#fff;
-    font-size:10px; padding:3px 8px; letter-spacing:0.06em; text-transform:uppercase;
+  .thumb .tag{position:absolute; top:8px; left:8px; background:rgba(20,18,16,0.78); color:#fff; font-size:10px; padding:4px 9px; letter-spacing:0.06em; text-transform:uppercase;}
+  .thumb .del{position:absolute; bottom:8px; right:8px; background:rgba(255,255,255,0.92); border:none; padding:6px 10px; font-size:11px; cursor:pointer; letter-spacing:0.06em; text-transform:uppercase;}
+  .thumb .cap{position:absolute; bottom:0; left:0; right:0; background:linear-gradient(0deg, rgba(0,0,0,0.68), transparent); color:#fff; font-size:11px; padding:18px 9px 7px;}
+  .empty-note{font-size:13px; color:#8a8072; margin-top:22px;}
+
+  .review-row{display:flex; align-items:flex-start; justify-content:space-between; gap:20px; padding:22px 0; border-bottom:1px solid var(--line);}
+  .review-row .rr-stars{color:var(--gold); font-size:14px; margin-bottom:6px;}
+  .review-row .rr-text{font-size:14px; color:#4a453e; max-width:560px;}
+  .review-row .rr-meta{font-size:11.5px; color:#8a8072; margin-top:8px;}
+  .review-row .del{
+    background:none; border:1px solid var(--line); padding:8px 16px; font-size:11px; letter-spacing:0.08em;
+    text-transform:uppercase; cursor:pointer; flex-shrink:0; transition:.3s ease;
   }
-  .thumb .del{
-    position:absolute; bottom:6px; right:6px; background:rgba(255,255,255,0.9); border:none;
-    padding:5px 9px; font-size:11px; cursor:pointer; letter-spacing:0.06em; text-transform:uppercase;
-  }
-  .thumb .cap{
-    position:absolute; bottom:0; left:0; right:0; background:linear-gradient(0deg, rgba(0,0,0,0.65), transparent);
-    color:#fff; font-size:11px; padding:16px 8px 6px;
-  }
-  .empty-note{font-size:13px; color:#8a8072; margin-top:20px;}
+  .review-row .del:hover{background:var(--ink); color:#fff; border-color:var(--ink);}
 </style>
 </head>
 <body>
 
 <header>
-  <a href="index.html" class="logo">Askamore <b>Photography</b></a>
+  <a href="index.html" class="logo">Askamore Photography</a>
   <button class="btn btn-ghost" id="logoutBtn" style="display:none;">Se déconnecter</button>
 </header>
 
-<!-- ÉCRAN DE CONNEXION -->
 <div id="loginScreen">
   <div class="login-box">
     <h1>Espace privé</h1>
     <p class="sub">Connectez-vous pour ajouter vos photos.</p>
     <form id="loginForm">
-      <div class="field">
-        <label for="loginEmail">E-mail</label>
-        <input id="loginEmail" type="email" required autocomplete="username">
-      </div>
-      <div class="field">
-        <label for="loginPassword">Mot de passe</label>
-        <input id="loginPassword" type="password" required autocomplete="current-password">
-      </div>
+      <div class="field"><label for="loginEmail">E-mail</label><input id="loginEmail" type="email" required autocomplete="username"></div>
+      <div class="field"><label for="loginPassword">Mot de passe</label><input id="loginPassword" type="password" required autocomplete="current-password"></div>
       <button type="submit" class="btn" style="width:100%; justify-content:center;">Se connecter</button>
       <p class="msg" id="loginMsg"></p>
     </form>
   </div>
 </div>
 
-<!-- TABLEAU DE BORD -->
 <div id="dashboard">
 
   <section class="panel">
@@ -120,15 +107,9 @@
                 <option value="seance-photo">Séance Photo</option>
               </select>
             </div>
-            <div class="field">
-              <label for="galleryCaption">Légende (optionnel)</label>
-              <input id="galleryCaption" type="text" placeholder="Ex : Cérémonie, Portrait...">
-            </div>
+            <div class="field"><label for="galleryCaption">Légende (optionnel)</label><input id="galleryCaption" type="text" placeholder="Ex : Cérémonie, Portrait..."></div>
           </div>
-          <div class="field">
-            <label for="galleryFile">Photo</label>
-            <input id="galleryFile" type="file" accept="image/*" required>
-          </div>
+          <div class="field"><label for="galleryFile">Photo</label><input id="galleryFile" type="file" accept="image/*" required></div>
           <button type="submit" class="btn" id="galleryUploadBtn">Publier sur le site</button>
           <p class="msg" id="galleryMsg"></p>
         </form>
@@ -138,26 +119,17 @@
     </div>
   </section>
 
-  <section class="panel" style="border-bottom:none;">
+  <section class="panel">
     <div class="wrap">
       <h2>Mon espace privé</h2>
       <p class="sub">Rangez ici tout votre travail — jamais visible par les visiteurs du site, uniquement par vous.</p>
       <div class="upload-box">
         <form id="privateForm">
           <div class="form-row">
-            <div class="field">
-              <label for="privateFolder">Dossier / Client (optionnel)</label>
-              <input id="privateFolder" type="text" placeholder="Ex : Mariage Dupont - Juin 2026">
-            </div>
-            <div class="field">
-              <label for="privateCaption">Légende (optionnel)</label>
-              <input id="privateCaption" type="text">
-            </div>
+            <div class="field"><label for="privateFolder">Dossier / Client (optionnel)</label><input id="privateFolder" type="text" placeholder="Ex : Mariage Dupont - Juin 2026"></div>
+            <div class="field"><label for="privateCaption">Légende (optionnel)</label><input id="privateCaption" type="text"></div>
           </div>
-          <div class="field">
-            <label for="privateFile">Photo(s)</label>
-            <input id="privateFile" type="file" accept="image/*" multiple required>
-          </div>
+          <div class="field"><label for="privateFile">Photo(s)</label><input id="privateFile" type="file" accept="image/*" multiple required></div>
           <button type="submit" class="btn" id="privateUploadBtn">Ajouter à mon espace privé</button>
           <p class="msg" id="privateMsg"></p>
         </form>
@@ -167,10 +139,18 @@
     </div>
   </section>
 
+  <section class="panel" style="border-bottom:none;">
+    <div class="wrap">
+      <h2>Modérer les avis clients</h2>
+      <p class="sub">Les avis sont visibles publiquement dès leur publication. Vous pouvez en supprimer un ici si besoin.</p>
+      <div id="reviewsModeration"></div>
+      <p class="empty-note" id="reviewsEmptyAdmin" style="display:none;">Aucun avis pour le moment.</p>
+    </div>
+  </section>
+
 </div>
 
 <script>
-  // ⚠️ À REMPLACER : vos identifiants Supabase (Project Settings > API)
   const SUPABASE_URL = 'https://okruoclbvsazfbyrygch.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9rcnVvY2xidnNhemZieXJ5Z2NoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMjc4MzUsImV4cCI6MjA5ODYwMzgzNX0.R7fHQMFR9XHFSRK1cudW2DLBGfDbqQdnMKfwPB4HCgY';
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -183,24 +163,14 @@
 
   async function checkSession(){
     const { data } = await sb.auth.getSession();
-    if(data.session){
-      showDashboard();
-    } else {
-      showLogin();
-    }
+    if(data.session){ showDashboard(); } else { showLogin(); }
   }
-
   function showDashboard(){
-    loginScreen.style.display = 'none';
-    dashboard.style.display = 'block';
-    logoutBtn.style.display = 'inline-flex';
-    loadGalleryThumbs();
-    loadPrivateThumbs();
+    loginScreen.style.display = 'none'; dashboard.style.display = 'block'; logoutBtn.style.display = 'inline-flex';
+    loadGalleryThumbs(); loadPrivateThumbs(); loadReviewsModeration();
   }
   function showLogin(){
-    loginScreen.style.display = 'flex';
-    dashboard.style.display = 'none';
-    logoutBtn.style.display = 'none';
+    loginScreen.style.display = 'flex'; dashboard.style.display = 'none'; logoutBtn.style.display = 'none';
   }
 
   loginForm.addEventListener('submit', async (e) => {
@@ -209,18 +179,10 @@
     const email = document.getElementById('loginEmail').value.trim();
     const password = document.getElementById('loginPassword').value;
     const { error } = await sb.auth.signInWithPassword({ email, password });
-    if(error){
-      loginMsg.textContent = 'Identifiants incorrects. Vérifiez votre e-mail et mot de passe.';
-      loginMsg.className = 'msg err';
-      return;
-    }
+    if(error){ loginMsg.textContent = 'Identifiants incorrects. Vérifiez votre e-mail et mot de passe.'; loginMsg.className = 'msg err'; return; }
     showDashboard();
   });
-
-  logoutBtn.addEventListener('click', async () => {
-    await sb.auth.signOut();
-    showLogin();
-  });
+  logoutBtn.addEventListener('click', async () => { await sb.auth.signOut(); showLogin(); });
 
   // ---------- GALERIE PUBLIQUE ----------
   const galleryForm = document.getElementById('galleryForm');
@@ -235,59 +197,27 @@
     const caption = document.getElementById('galleryCaption').value.trim();
     const file = document.getElementById('galleryFile').files[0];
     if(!file) return;
-
-    galleryUploadBtn.disabled = true;
-    galleryUploadBtn.textContent = 'Envoi en cours...';
-    galleryMsg.className = 'msg';
-    galleryMsg.textContent = '';
-
+    galleryUploadBtn.disabled = true; galleryUploadBtn.textContent = 'Envoi en cours...';
+    galleryMsg.className = 'msg'; galleryMsg.textContent = '';
     const path = `${category}/${Date.now()}-${file.name.replace(/\s+/g,'-')}`;
     const { error: uploadError } = await sb.storage.from('gallery').upload(path, file);
-
-    if(uploadError){
-      galleryMsg.textContent = "Erreur lors de l'envoi : " + uploadError.message;
-      galleryMsg.classList.add('err');
-      galleryUploadBtn.disabled = false;
-      galleryUploadBtn.textContent = 'Publier sur le site';
-      return;
-    }
-
-    const { error: insertError } = await sb.from('gallery_photos').insert({
-      category, file_path: path, caption
-    });
-
-    galleryUploadBtn.disabled = false;
-    galleryUploadBtn.textContent = 'Publier sur le site';
-
-    if(insertError){
-      galleryMsg.textContent = "Erreur d'enregistrement : " + insertError.message;
-      galleryMsg.classList.add('err');
-      return;
-    }
-
-    galleryMsg.textContent = 'Photo publiée sur le site !';
-    galleryMsg.classList.add('ok');
-    galleryForm.reset();
-    loadGalleryThumbs();
+    if(uploadError){ galleryMsg.textContent = "Erreur lors de l'envoi : " + uploadError.message; galleryMsg.classList.add('err'); galleryUploadBtn.disabled = false; galleryUploadBtn.textContent = 'Publier sur le site'; return; }
+    const { error: insertError } = await sb.from('gallery_photos').insert({ category, file_path: path, caption });
+    galleryUploadBtn.disabled = false; galleryUploadBtn.textContent = 'Publier sur le site';
+    if(insertError){ galleryMsg.textContent = "Erreur d'enregistrement : " + insertError.message; galleryMsg.classList.add('err'); return; }
+    galleryMsg.textContent = 'Photo publiée sur le site !'; galleryMsg.classList.add('ok');
+    galleryForm.reset(); loadGalleryThumbs();
   });
 
   async function loadGalleryThumbs(){
     const { data, error } = await sb.from('gallery_photos').select('*').order('created_at', {ascending:false});
     galleryThumbs.innerHTML = '';
-    if(error || !data || data.length === 0){
-      galleryEmpty.style.display = 'block';
-      return;
-    }
+    if(error || !data || data.length === 0){ galleryEmpty.style.display = 'block'; return; }
     galleryEmpty.style.display = 'none';
     data.forEach(row => {
       const url = sb.storage.from('gallery').getPublicUrl(row.file_path).data.publicUrl;
-      const div = document.createElement('div');
-      div.className = 'thumb';
-      div.innerHTML = `
-        <img src="${url}" alt="${row.caption || ''}">
-        <span class="tag">${row.category}</span>
-        ${row.caption ? `<span class="cap">${row.caption}</span>` : ''}
-        <button class="del" data-id="${row.id}" data-path="${row.file_path}" data-bucket="gallery">Supprimer</button>`;
+      const div = document.createElement('div'); div.className = 'thumb';
+      div.innerHTML = `<img src="${url}" alt="${row.caption || ''}"><span class="tag">${row.category}</span>${row.caption ? `<span class="cap">${row.caption}</span>` : ''}<button class="del" data-id="${row.id}" data-path="${row.file_path}" data-bucket="gallery">Supprimer</button>`;
       galleryThumbs.appendChild(div);
     });
   }
@@ -305,74 +235,73 @@
     const caption = document.getElementById('privateCaption').value.trim();
     const files = document.getElementById('privateFile').files;
     if(!files.length) return;
-
     const { data: userData } = await sb.auth.getUser();
     const userId = userData.user.id;
-
-    privateUploadBtn.disabled = true;
-    privateMsg.className = 'msg';
+    privateUploadBtn.disabled = true; privateMsg.className = 'msg';
     let successCount = 0;
-
     for(const file of files){
       privateUploadBtn.textContent = `Envoi ${successCount+1}/${files.length}...`;
       const path = `${userId}/${folder.replace(/\s+/g,'-')}/${Date.now()}-${file.name.replace(/\s+/g,'-')}`;
       const { error: uploadError } = await sb.storage.from('private-work').upload(path, file);
-      if(!uploadError){
-        await sb.from('private_photos').insert({ folder, file_path: path, caption });
-        successCount++;
-      }
+      if(!uploadError){ await sb.from('private_photos').insert({ folder, file_path: path, caption }); successCount++; }
     }
-
-    privateUploadBtn.disabled = false;
-    privateUploadBtn.textContent = 'Ajouter à mon espace privé';
-
-    if(successCount === files.length){
-      privateMsg.textContent = `${successCount} photo(s) ajoutée(s) à votre espace privé.`;
-      privateMsg.classList.add('ok');
-    } else {
-      privateMsg.textContent = `${successCount}/${files.length} photo(s) envoyée(s), une erreur est survenue pour les autres.`;
-      privateMsg.classList.add('err');
-    }
-    privateForm.reset();
-    loadPrivateThumbs();
+    privateUploadBtn.disabled = false; privateUploadBtn.textContent = 'Ajouter à mon espace privé';
+    if(successCount === files.length){ privateMsg.textContent = `${successCount} photo(s) ajoutée(s) à votre espace privé.`; privateMsg.classList.add('ok'); }
+    else{ privateMsg.textContent = `${successCount}/${files.length} photo(s) envoyée(s), une erreur est survenue pour les autres.`; privateMsg.classList.add('err'); }
+    privateForm.reset(); loadPrivateThumbs();
   });
 
   async function loadPrivateThumbs(){
     const { data, error } = await sb.from('private_photos').select('*').order('created_at', {ascending:false});
     privateThumbs.innerHTML = '';
-    if(error || !data || data.length === 0){
-      privateEmpty.style.display = 'block';
-      return;
-    }
+    if(error || !data || data.length === 0){ privateEmpty.style.display = 'block'; return; }
     privateEmpty.style.display = 'none';
     for(const row of data){
       const { data: signedData } = await sb.storage.from('private-work').createSignedUrl(row.file_path, 3600);
       const url = signedData ? signedData.signedUrl : '';
-      const div = document.createElement('div');
-      div.className = 'thumb';
-      div.innerHTML = `
-        <img src="${url}" alt="${row.caption || ''}">
-        <span class="tag">${row.folder}</span>
-        ${row.caption ? `<span class="cap">${row.caption}</span>` : ''}
-        <button class="del" data-id="${row.id}" data-path="${row.file_path}" data-bucket="private-work">Supprimer</button>`;
+      const div = document.createElement('div'); div.className = 'thumb';
+      div.innerHTML = `<img src="${url}" alt="${row.caption || ''}"><span class="tag">${row.folder}</span>${row.caption ? `<span class="cap">${row.caption}</span>` : ''}<button class="del" data-id="${row.id}" data-path="${row.file_path}" data-bucket="private-work">Supprimer</button>`;
       privateThumbs.appendChild(div);
     }
   }
 
-  // ---------- SUPPRESSION (galerie + privé) ----------
+  // ---------- MODÉRATION DES AVIS ----------
+  const reviewsModeration = document.getElementById('reviewsModeration');
+  const reviewsEmptyAdmin = document.getElementById('reviewsEmptyAdmin');
+
+  async function loadReviewsModeration(){
+    const { data, error } = await sb.from('reviews').select('*').order('created_at', {ascending:false});
+    reviewsModeration.innerHTML = '';
+    if(error || !data || data.length === 0){ reviewsEmptyAdmin.style.display = 'block'; return; }
+    reviewsEmptyAdmin.style.display = 'none';
+    data.forEach(r => {
+      const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+      const dateStr = r.created_at ? new Date(r.created_at).toLocaleDateString('fr-FR', {day:'2-digit', month:'long', year:'numeric'}) : '';
+      const row = document.createElement('div'); row.className = 'review-row';
+      const safeName = (r.name || 'Client').replace(/</g,'&lt;');
+      const safeComment = (r.comment || '').replace(/</g,'&lt;');
+      row.innerHTML = `<div><div class="rr-stars">${stars}</div><p class="rr-text">${safeComment}</p><p class="rr-meta">${safeName} — ${r.type || ''} — ${dateStr}</p></div><button class="del" data-id="${r.id}">Supprimer</button>`;
+      reviewsModeration.appendChild(row);
+    });
+  }
+
+  // ---------- SUPPRESSION (galerie + privé + avis) ----------
   document.addEventListener('click', async (e) => {
     if(!e.target.classList.contains('del')) return;
-    if(!confirm('Supprimer cette photo ?')) return;
+    if(!confirm('Supprimer cet élément ?')) return;
     const id = e.target.dataset.id;
     const path = e.target.dataset.path;
     const bucket = e.target.dataset.bucket;
-    const table = bucket === 'gallery' ? 'gallery_photos' : 'private_photos';
 
-    await sb.storage.from(bucket).remove([path]);
-    await sb.from(table).delete().eq('id', id);
-
-    if(bucket === 'gallery') loadGalleryThumbs();
-    else loadPrivateThumbs();
+    if(bucket){
+      const table = bucket === 'gallery' ? 'gallery_photos' : 'private_photos';
+      await sb.storage.from(bucket).remove([path]);
+      await sb.from(table).delete().eq('id', id);
+      if(bucket === 'gallery') loadGalleryThumbs(); else loadPrivateThumbs();
+    } else {
+      await sb.from('reviews').delete().eq('id', id);
+      loadReviewsModeration();
+    }
   });
 
   checkSession();
